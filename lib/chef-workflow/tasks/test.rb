@@ -18,28 +18,29 @@ namespace :test do
     s.run
 
     groups =
-      KnifeSupport.singleton.test_recipes.map do |recipe|
-        group_name = "recipe-#{recipe.gsub(/::/, '-')}"
+    KnifeSupport.singleton.test_recipes.map do |recipe|
+      group_name = "recipe-#{recipe.gsub(/::/, '-')}"
 
-        kp              = VM::KnifeProvisioner.new
-        kp.username     = KnifeSupport.singleton.ssh_user
-        kp.password     = KnifeSupport.singleton.ssh_password
-        kp.use_sudo     = KnifeSupport.singleton.use_sudo
-        kp.ssh_key      = KnifeSupport.singleton.ssh_identity_file
-        kp.environment  = KnifeSupport.singleton.test_environment
-        kp.run_list     = [ "recipe[#{recipe}]", "recipe[minitest-handler]" ]
-        kp.solr_check   = false
+      kp               = VM::KnifeProvisioner.new
+      kp.username      = KnifeSupport.singleton.ssh_user
+      kp.password      = KnifeSupport.singleton.ssh_password
+      kp.use_sudo      = KnifeSupport.singleton.use_sudo
+      kp.ssh_key       = KnifeSupport.singleton.ssh_identity_file
+      kp.environment   = KnifeSupport.singleton.test_environment
+      kp.template_file = KnifeSupport.singleton.template_file
+      kp.run_list      = [ "recipe[#{recipe}]", "recipe[minitest-handler]" ]
+      kp.solr_check    = false
 
-        s.schedule_provision(
-          group_name,
-          [
-            GeneralSupport.singleton.machine_provisioner.new(group_name, 1),
-            kp
-          ]
-        )
+      s.schedule_provision(
+        group_name,
+        [
+          GeneralSupport.singleton.machine_provisioner.new(group_name, 1),
+          kp
+        ]
+      )
 
-        group_name
-      end
+      group_name
+    end
 
     s.wait_for(*groups)
 
