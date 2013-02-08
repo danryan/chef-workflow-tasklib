@@ -1,7 +1,5 @@
-class Chef
-  module Workflow
-    module Tasklib
-      VERSION = "0.1.1"
-    end
+module ChefWorkflow
+  module Tasklib
+    VERSION = "0.1.1"
   end
 end

@@ -5,7 +5,7 @@ require 'chef-workflow-tasklib/version'
 
 Gem::Specification.new do |gem|
   gem.name          = "chef-workflow-tasklib"
-  gem.version       = Chef::Workflow::Tasklib::VERSION
+  gem.version       = ChefWorkflow::Tasklib::VERSION
   gem.authors       = ["Erik Hollensbe"]
   gem.email         = ["erik+github@hollensbe.org"]
   gem.description   = %q{A set of rake tasks provided as discrete libraries for forming a chef workflow}
